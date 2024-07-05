@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer {
+  html {
+    @apply bg-neutral-950;
+  }
+  input[type="range"] {
+    @apply bg-neutral-500 text-neutral-700 accent-red-700;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-900;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    @apply bg-neutral-800;
+  }
+}
