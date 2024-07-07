@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setmusicplay } from "../../Redux/musicplaylistSlice";
-import { setCount } from "../../Redux/counterSlice";
-
+import { setPlaygState } from "../../Redux/PlaySlice";
 function PlayList() {
   const [playlists, setPlayLists] = useState([]);
   const [isplaying, setPlayingState] = useState(false);
@@ -53,7 +52,13 @@ function PlayList() {
       dispatch(
         setmusicplay(playlists[playListIndex].playListSongs[startIndex + 1])
       );
+      dispatch(setPlaygState(true));
       setStartIndex(startIndex + 1);
+    }
+    if (isEnd && isplaying && startIndex >= playlists.length) {
+      dispatch(setmusicplay(playlists[playListIndex].playListSongs[0]));
+      dispatch(setPlaygState(true));
+      setStartIndex(0);
     }
   }, [isplaying, isEnd]);
 

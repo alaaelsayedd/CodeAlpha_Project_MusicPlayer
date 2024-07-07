@@ -7,7 +7,7 @@ import { setEndState } from "../../Redux/endSlice";
 
 function AudioPlayer() {
   const { songs } = useSelector((state) => state.songs);
- 
+  const { playing } = useSelector((state) => state.play);
   const { musicplay } = useSelector((state) => state.musicplay);
   const { counter } = useSelector((state) => state.counter);
   const [isPlaying, setPlayState] = useState(false);
@@ -82,9 +82,8 @@ function AudioPlayer() {
   function handleUpdate() {
     setCurrentTime(audioRef.current.currentTime);
     if (audioRef.current.currentTime == audioRef.current.duration) {
-         dispatch(setEndState(true));
-    }
-    else{
+      dispatch(setEndState(true));
+    } else {
       dispatch(setEndState(false));
     }
   }
@@ -103,13 +102,16 @@ function AudioPlayer() {
     audio.src = musicplay.src;
     audio.load();
     setPlayState(false);
+    if (playing) {
+      playingAudio();
+    }
 
     return () => {
       audio.removeEventListener("timeupdate", handleUpdate);
       audio.removeEventListener("volumechange", handleVolume);
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
-  }, [counter, dispatch, musicplay]);
+  }, [counter, dispatch, musicplay, playing]);
 
   return (
     <div className="bg-neutral-950 rounded-lg mt-5 mx-auto py-10 px-3  border border-neutral-900 w-full flex items-center flex-col gap-y-11">
