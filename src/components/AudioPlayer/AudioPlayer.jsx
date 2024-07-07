@@ -3,9 +3,11 @@ import { data } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
 import { setCount } from "../../Redux/counterSlice";
 import { setmusicplay } from "../../Redux/musicplaylistSlice";
+import { setEndState } from "../../Redux/endSlice";
 
 function AudioPlayer() {
   const { songs } = useSelector((state) => state.songs);
+ 
   const { musicplay } = useSelector((state) => state.musicplay);
   const { counter } = useSelector((state) => state.counter);
   const [isPlaying, setPlayState] = useState(false);
@@ -79,6 +81,12 @@ function AudioPlayer() {
 
   function handleUpdate() {
     setCurrentTime(audioRef.current.currentTime);
+    if (audioRef.current.currentTime == audioRef.current.duration) {
+         dispatch(setEndState(true));
+    }
+    else{
+      dispatch(setEndState(false));
+    }
   }
 
   useEffect(() => {

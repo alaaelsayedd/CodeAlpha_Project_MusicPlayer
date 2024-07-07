@@ -3,7 +3,6 @@ import { data } from "../../data";
 import { setCount } from "../../Redux/counterSlice";
 import { setSongs } from "../../Redux/SongsSlice";
 import { useEffect } from "react";
-import { setPlayLists } from "../../Redux/playListslice";
 import { setIndex, SetpropState } from "../../Redux/PropSlice";
 import { setmusicplay } from "../../Redux/musicplaylistSlice";
 
@@ -60,11 +59,6 @@ function DispalySongs() {
   function addToPlayList(index) {
     dispatch(SetpropState(true));
     dispatch(setIndex(index));
-    // console.log(index)
-
-    // const playlistItem = ["playlist1",songs[index]]
-    // dispatch(setPlayLists(playlistItem))
-    // console.log(playlistItem)
   }
   return (
     <>

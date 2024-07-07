@@ -8,7 +8,9 @@ function PlayList() {
   const [isplaying, setPlayingState] = useState(false);
   const [itemindex, setItemindex] = useState(null);
   const [playListIndex, setIndex] = useState(0);
+  const [startIndex,setStartIndex] =useState(0);
   const dispatch = useDispatch();
+  const { isEnd } = useSelector((state) => state.end);
 
   const { playListsChange } = useSelector((state) => state.playLists);
   useEffect(() => {
@@ -17,7 +19,6 @@ function PlayList() {
     }
   }, [playListsChange]);
   const [showDetails, setShowDetails] = useState(false);
-  //   console.log(playlists);
   function handleShowDetails() {
     setShowDetails(!showDetails);
   }
@@ -39,17 +40,23 @@ function PlayList() {
   }
   function handlePlaying(index) {
     if (isplaying == true) {
-      //   console.log(playlists[index].playListSongs[0]);
-      dispatch(setmusicplay(playlists[index].playListSongs[0]));
+      dispatch(setmusicplay(playlists[index].playListSongs[startIndex]));
     } else {
     }
   }
   function displayMusic(musicindex, playListIndex) {
     dispatch(setmusicplay(playlists[playListIndex].playListSongs[musicindex]));
+    setStartIndex(musicindex);
   }
   useEffect(() => {
     handlePlaying(playListIndex);
-  }, [isplaying]);
+    if(isEnd && isplaying)
+    {
+      dispatch(setmusicplay(playlists[playListIndex].playListSongs[startIndex+1]));
+      setStartIndex(startIndex+1);
+
+    }
+  }, [isplaying,isEnd]);
 
   return (
     <>
