@@ -8,10 +8,9 @@ function PlayList() {
   const [isplaying, setPlayingState] = useState(false);
   const [itemindex, setItemindex] = useState(null);
   const [playListIndex, setIndex] = useState(0);
-  const [startIndex,setStartIndex] =useState(0);
+  const [startIndex, setStartIndex] = useState(0);
   const dispatch = useDispatch();
   const { isEnd } = useSelector((state) => state.end);
-
   const { playListsChange } = useSelector((state) => state.playLists);
   useEffect(() => {
     if (localStorage.getItem("PlayLists")) {
@@ -50,13 +49,13 @@ function PlayList() {
   }
   useEffect(() => {
     handlePlaying(playListIndex);
-    if(isEnd && isplaying)
-    {
-      dispatch(setmusicplay(playlists[playListIndex].playListSongs[startIndex+1]));
-      setStartIndex(startIndex+1);
-
+    if (isEnd && isplaying && startIndex < playlists.length) {
+      dispatch(
+        setmusicplay(playlists[playListIndex].playListSongs[startIndex + 1])
+      );
+      setStartIndex(startIndex + 1);
     }
-  }, [isplaying,isEnd]);
+  }, [isplaying, isEnd]);
 
   return (
     <>
